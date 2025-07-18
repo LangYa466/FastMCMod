@@ -1,0 +1,65 @@
+buildscript {
+    ext {
+        forgegradle_version = "2.3-SNAPSHOT"
+    }
+    repositories {
+        mavenCentral()
+        maven { url = "https://maven.minecraftforge.net/" }
+        maven { url = "https://jitpack.io/" }
+    }
+    dependencies {
+        classpath "net.minecraftforge.gradle:ForgeGradle:${forgegradle_version}"
+    }
+}
+
+apply plugin: "net.minecraftforge.gradle.forge"
+
+dependencies {
+    implementation project(':core')
+    implementation name: 'forgeBin-1.12.2-14.23.5.2768-1.12.2'
+}
+
+configurations.runtimeOnly.canBeResolved = true
+if (tasks.findByName("runClient")) {
+    tasks.getByName("runClient") {
+        dependsOn.removeAll { it == configurations.runtimeOnly }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = "https://maven.minecraftforge.net/" }
+    maven { url = "https://jitpack.io/" }
+}
+
+minecraft {
+    version = "1.12.2-14.23.5.2768"
+    runDir = "run"
+    mappings = "snapshot_20171003"
+    makeObfSourceJar = true
+}
+
+configurations.runtimeOnly.canBeResolved = true
+if (tasks.findByName("runClient")) {
+    tasks.getByName("runClient") {
+        dependsOn.removeAll { it == configurations.runtimeOnly }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs '.'
+    }
+}
