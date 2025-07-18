@@ -1,0 +1,67 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "daporkchop" // 找了一辈子
+            url = "https://maven.daporkchop.net/"
+        }
+        maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
+        maven { url = "https://jitpack.io/" }
+    }
+}
+
+plugins {
+    id "java"
+    id "idea"
+    id "net.minecraftforge.gradle.forge"
+    id "org.spongepowered.mixin"
+}
+
+configurations {
+    resolvedRuntimeOnly {
+        extendsFrom runtimeOnly
+        canBeResolved = true
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+archivesBaseName = "template-mod"
+
+minecraft {
+    version = "1.8.9-11.15.1.2318-1.8.9"
+    runDir = "run"
+    mappings = "stable_22"
+    makeObfSourceJar = false
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs '.'
+    }
+}
+
+dependencies {
+    implementation name: 'forgeBin-1.8.9-11.15.1.2318-1.8.9'
+}
+
+configurations.runtimeOnly.canBeResolved = true
+tasks.named("runClient") {
+    dependsOn.removeAll { it == configurations.runtimeOnly }
+}
