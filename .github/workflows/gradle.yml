@@ -36,23 +36,20 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
       
-    - name: Build 1.8.9 version
-      run: ./gradlew build -PmcVersion=1.8.9
-      
-    - name: Build 1.12.2 version
-      run: ./gradlew build -PmcVersion=1.12.2
+    - name: Build all projects
+      run: ./gradlew build
       
     - name: Upload 1.8.9 build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: FastMCMod-1.8.9
-        path: build/libs/*.jar
+        path: 1.8.9/build/libs/*.jar
         
     - name: Upload 1.12.2 build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: FastMCMod-1.12.2
-        path: build/libs/*.jar
+        path: 1.12.2/build/libs/*.jar
 
     # NOTE: The Gradle Wrapper is the default and recommended way to run Gradle (https://docs.gradle.org/current/userguide/gradle_wrapper.html).
     # If your project does not have the Gradle Wrapper configured, you can use the following configuration to run Gradle with a specified version.
