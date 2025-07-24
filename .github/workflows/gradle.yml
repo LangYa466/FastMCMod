@@ -37,16 +37,16 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build all projects
-      run: ./gradlew build
+      run: ./gradlew build --stacktrace
       
     - name: Upload 1.8.9 build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: FastMCMod-1.8.9
         path: 1.8.9/build/libs/*.jar
         
     - name: Upload 1.12.2 build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: FastMCMod-1.12.2
         path: 1.12.2/build/libs/*.jar
