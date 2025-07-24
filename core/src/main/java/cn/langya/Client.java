@@ -5,5 +5,5 @@ package cn.langya;
  * @date 2025/7/18
  */
 public class Client {
-    public static final String name = "Test";
+    public static final String name = "template";
 }

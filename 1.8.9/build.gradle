@@ -40,13 +40,6 @@ minecraft {
     makeObfSourceJar = false
 }
 
-configurations.runtimeOnly.canBeResolved = true
-if (tasks.findByName("runClient")) {
-    tasks.getByName("runClient") {
-        dependsOn.removeAll { it == configurations.runtimeOnly }
-    }
-}
-
 repositories {
     mavenCentral()
     flatDir {
